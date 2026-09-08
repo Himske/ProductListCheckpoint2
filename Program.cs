@@ -1,6 +1,6 @@
 ﻿using ProductListCheckpoint2;
 
-List<Product> products = [];
+ProductManager products = new();
 
 Console.WriteLine("***** PRODUCT LIST APPLICATION *****");
 Console.WriteLine();
@@ -23,15 +23,21 @@ while (true) {
     int price = int.Parse(priceString);
 
     Product product = new(category, name, price);
-    products.Add(product);
+    bool addedProduct = products.AddProduct(product);
 
-    Console.WriteLine();
-    Console.WriteLine("Product added successfully!");
-    Console.WriteLine();
+    if (addedProduct) {
+        Console.WriteLine();
+        Console.BackgroundColor = ConsoleColor.Green;
+        Console.WriteLine("Product added successfully!");
+        Console.ResetColor();
+        Console.WriteLine();
+    }
 }
 
 Console.WriteLine("***** PRODUCT LIST *****");
 Console.WriteLine();
-foreach (Product product in products) {
-    Console.WriteLine($"{product.Category,-10}| {product.Name,-10}| {product.Price} kr");
-}
+products.ShowProducts();
+Console.WriteLine();
+Console.WriteLine("------------------------");
+Console.WriteLine($"TOTAL PRICE: {products.CalculateTotal()} kr");
+Console.WriteLine("------------------------");
