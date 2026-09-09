@@ -2,42 +2,45 @@
 
 ProductManager products = new();
 
-Console.WriteLine("***** PRODUCT LIST APPLICATION *****");
-Console.WriteLine();
+ProductManager.ShowHeader();
 
 while (true) {
-    Console.Write("Enter Category: ");
-    string category = Console.ReadLine() ?? string.Empty;
+    while (true) {
+        try {
+            string category = ProductManager.EnterCategory();
 
-    if (category.Trim().ToLower().Equals("q")) {
-        Console.WriteLine();
-        break;
+            if (category.ToLower().Equals("q")) {
+                break;
+            }
+
+            string name = ProductManager.EnterName();
+            int price = ProductManager.EnterPrice();
+            products.AddProduct(category, name, price);
+            ProductManager.ShowSuccess("Product added successfully!");
+        }
+        catch (Exception ex) {
+            ProductManager.ShowError(ex.Message);
+        }
+        finally {
+            Console.ResetColor();
+        }
     }
 
-    Console.Write("Enter Product Name: ");
-    string name = Console.ReadLine() ?? string.Empty;
+    products.ShowProducts();
 
-    Console.Write("Enter Price: ");
-    string priceString = Console.ReadLine() ?? string.Empty;
-
-    int price = int.Parse(priceString);
-
-    Product product = new(category, name, price);
-    bool addedProduct = products.AddProduct(product);
-
-    if (addedProduct) {
+    while (true) {
         Console.WriteLine();
-        Console.BackgroundColor = ConsoleColor.Green;
-        Console.WriteLine("Product added successfully!");
-        Console.ResetColor();
+        string more = ProductManager.GetInput("Do you want to add more products? (Y/N): ");
         Console.WriteLine();
+        if (more.ToUpper().Equals("N")) {
+            Environment.Exit(0);
+        }
+        else if (!more.ToUpper().Equals("Y")) {
+            ProductManager.ShowError("That is not a valid option.");
+        }
+        else {
+            break;
+        }
     }
 }
 
-Console.WriteLine("***** PRODUCT LIST *****");
-Console.WriteLine();
-products.ShowProducts();
-Console.WriteLine();
-Console.WriteLine("------------------------");
-Console.WriteLine($"TOTAL PRICE: {products.CalculateTotal()} kr");
-Console.WriteLine("------------------------");
