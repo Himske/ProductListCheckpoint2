@@ -1,25 +1,54 @@
 ﻿namespace ProductListCheckpoint2 {
     internal class ProductManager() {
-        public List<Product> ProductList { get; set; } = [];
+        public static List<Product> ProductList { get; set; } = [];
 
-        public void AddProduct(string category, string name, int price) {
-            ProductList.Add(new Product(category, name, price));
-        }
+        public static void AddProduct() {
+            while (true) {
+                try {
+                    string category = ProductManager.EnterCategory();
 
-        public void ShowProducts() {
-            Console.WriteLine();
-            Console.WriteLine("***** PRODUCT LIST *****");
-            Console.WriteLine();
-            foreach (Product product in ProductList.OrderBy(p => p.Price)) {
-                Console.WriteLine($"{product.Category,-12}| {product.Name,-12}| {product.Price} kr");
+                    if (category.ToLower().Equals("q")) {
+                        break;
+                    }
+
+                    string name = ProductManager.EnterName();
+                    int price = ProductManager.EnterPrice();
+                    ProductList.Add(new Product(category, name, price));
+                    ProductManager.ShowSuccess("Product added successfully!");
+                }
+                catch (Exception ex) {
+                    ProductManager.ShowError(ex.Message);
+                }
+                finally {
+                    Console.ResetColor();
+                }
             }
-            Console.WriteLine();
-            Console.WriteLine("------------------------");
-            Console.WriteLine($"TOTAL PRICE: {CalculateTotal()} kr");
-            Console.WriteLine("------------------------");
         }
 
-        public int CalculateTotal() {
+        public static void SearchProduct() {
+            string query = GetInput("Search Product: ");
+            List<Product> products = ProductList.FindAll(s => s.Name.Contains(query, StringComparison.CurrentCultureIgnoreCase));
+            products.AddRange(ProductList.FindAll(s => s.Category.Contains(query, StringComparison.CurrentCultureIgnoreCase)));
+            Console.WriteLine();
+            Console.WriteLine("FOUND PRODUCTS:");
+            Console.WriteLine();
+            if (products.Count > 0) {
+                Console.ForegroundColor = ConsoleColor.Green;
+                foreach (Product product in products.OrderBy(p => p.Price)) {
+                    Console.WriteLine($"{product.Category,-12}| {product.Name,-12}| {product.Price} kr");
+                }
+            }
+            else {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("No Products Found.");
+            }
+            Console.ResetColor();
+            Console.WriteLine();
+            Console.Write("Press <Enter> to continue.");
+            Console.ReadLine();
+        }
+
+        public static int CalculateTotal() {
             int total = ProductList.Sum(p => p.Price);
             return total;
         }
@@ -31,7 +60,7 @@
         }
 
         public static string EnterCategory() {
-            string category = GetInput("Enter Category: ");
+            string category = GetInput("Enter Category ('q' to quit): ");
             if (category.Equals(string.Empty)) {
                 throw new ArgumentException("Category can't be empty.");
             }
@@ -85,6 +114,21 @@
             return price;
         }
 
+        public static void ShowProducts() {
+            Console.WriteLine("***** PRODUCT LIST *****");
+            Console.WriteLine();
+            foreach (Product product in ProductList.OrderBy(p => p.Price)) {
+                Console.WriteLine($"{product.Category,-12}| {product.Name,-12}| {product.Price} kr");
+            }
+            Console.WriteLine();
+            Console.WriteLine("------------------------");
+            Console.WriteLine($"TOTAL PRICE: {ProductManager.CalculateTotal()} kr");
+            Console.WriteLine("------------------------");
+            Console.WriteLine();
+            Console.Write("Press <Enter> to continue.");
+            Console.ReadLine();
+        }
+
         public static void ShowError(string message) {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Red;
@@ -103,7 +147,22 @@
         }
 
         public static void ShowHeader() {
-            Console.WriteLine("***** PRODUCT LIST APPLICATION *****");
+            Console.WriteLine("*".PadRight(35, '*'));
+            Console.WriteLine(" PRODUCT MANAGEMENT SYSTEM");
+            Console.WriteLine("*".PadRight(35, '*'));
+            Console.WriteLine();
+        }
+
+        public static void ShowMenu() {
+            Console.WriteLine("1. Add Product");
+            Console.WriteLine("2. Show Products");
+            Console.WriteLine("3. Search Product");
+            Console.WriteLine("4. Edit Product");
+            Console.WriteLine("5. Delete Product");
+            Console.WriteLine("6. Statistics");
+            Console.WriteLine("7. Save Products");
+            Console.WriteLine("8. Load Products");
+            Console.WriteLine("9. Exit");
             Console.WriteLine();
         }
     }
