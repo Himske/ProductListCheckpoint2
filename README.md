@@ -1,1 +1,1 @@
-# ProductListCheckpoint2
+# Product List - Checkpoint2
