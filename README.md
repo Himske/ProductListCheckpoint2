@@ -5,10 +5,13 @@ Simple console application to manage a product list.
 <img width="294" height="301" alt="image" src="https://github.com/user-attachments/assets/a946973f-e595-4b3e-aaef-6d612f9d5c3e" />
 
 ## Add Product
-Enter Category, Name and Price. You add products one by one until you enter "q". When entering "q" you will be taken back to the menu.  
+Enter Category, Name and Price.  
+You add products one by one until you enter "q" as a Category.  
+When entering "q" you will be taken back to the menu.  
 
 ## Show Products
 Shows a list of all the Products currently in the system and the total price for all the Products.  
+  
 <img width="393" height="347" alt="image" src="https://github.com/user-attachments/assets/6d3696b4-7b57-44bf-af62-1249fc000ef0" />
 
 ## Search Product
@@ -26,6 +29,7 @@ Enter a product Id. If a Product is found it will be shown. Then you can update 
 
 ## Delete Product  
 Enter a product Id. If a Product is found it will be removed from the system. But you need to save products to persist the removal.  
+  
 <img width="469" height="223" alt="image" src="https://github.com/user-attachments/assets/2503e171-8ef2-44fc-9ab1-b305ff8ac142" />  
 
 
