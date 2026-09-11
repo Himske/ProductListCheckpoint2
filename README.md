@@ -40,7 +40,7 @@ Enter a product Id. If a Product is found it will be removed from the system. Bu
 Saves the Products currently in the system to a JSON file.
 
 ## Load Products  
-If the a JSON file exists it will be loaded into the system, otherwise the system will have an empty list of Products.  
+If a JSON file exists it will be loaded into the system, otherwise the system will have an empty list of Products.  
 
 ## Exit  
 Stops the system from running. Any unsaved changes will be lost, so remember to save the Products before exiting.  
