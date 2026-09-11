@@ -22,14 +22,29 @@ while (true) {
             ProductManager.SearchProduct();
             break;
         case "4":
+            Console.Clear();
+            ProductManager.ShowHeader();
+            ProductManager.EditProduct();
             break;
         case "5":
+            Console.Clear();
+            ProductManager.ShowHeader();
+            ProductManager.DeleteProduct();
             break;
         case "6":
+            Console.Clear();
+            ProductManager.ShowHeader();
+            ProductManager.GenerateStatistics();
             break;
         case "7":
+            Console.Clear();
+            ProductManager.ShowHeader();
+             ProductManager.SaveProducts();
             break;
         case "8":
+            Console.Clear();
+            ProductManager.ShowHeader();
+            ProductManager.LoadProducts();
             break;
         case "9":
             Environment.Exit(0);
